@@ -44,6 +44,10 @@ class Program
             {
                 DeleteNote();
             }
+            else if (choice == "5")
+            {
+                EditNote();
+            }
             else if (choice == "0")
             {
                 isRunning = false;
@@ -51,7 +55,7 @@ class Program
             }
             else
             {
-                Console.WriteLine("Invalid option. Please choose 0 to 4.");
+                Console.WriteLine("Invalid option. Please choose 0 to 5.");
             }
         }
     }
@@ -64,6 +68,7 @@ class Program
         Console.WriteLine("2. List notes");
         Console.WriteLine("3. Find notes");
         Console.WriteLine("4. Delete a note");
+        Console.WriteLine("5. Edit a note");
         Console.WriteLine("0. Exit");
     }
 
@@ -72,9 +77,10 @@ class Program
         Console.Write("Enter your note: ");
         string? note = Console.ReadLine();
 
-        if (note == null)
+        if (string.IsNullOrWhiteSpace(note))
         {
-            note = "";
+            Console.WriteLine("A note cannot be empty.");
+            return;
         }
 
         notes.Add(note);
@@ -105,9 +111,10 @@ class Program
         Console.Write("Enter text to search for: ");
         string? searchText = Console.ReadLine();
 
-        if (searchText == null)
+        if (string.IsNullOrWhiteSpace(searchText))
         {
-            searchText = "";
+            Console.WriteLine("Please enter text to search for.");
+            return;
         }
 
         int matchCount = 0;
@@ -153,6 +160,43 @@ class Program
         else
         {
             Console.WriteLine("That note number is not valid.");
+        }
+    }
+
+    static void EditNote()
+    {
+        ListNotes();
+
+        if (notes.Count == 0)
+        {
+            return;
+        }
+
+        Console.Write("Enter the number of the note to edit: ");
+        string? input = Console.ReadLine();
+        int noteNumber;
+
+        if (int.TryParse(input, out noteNumber) == false ||
+            noteNumber < 1 ||
+            noteNumber > notes.Count)
+        {
+            Console.WriteLine("That note number is not valid.");
+            return;
+        }
+
+        Console.Write("Enter the updated note: ");
+        string? updatedNote = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(updatedNote))
+        {
+            Console.WriteLine("A note cannot be empty.");
+            return;
+        }
+
+        notes[noteNumber - 1] = updatedNote;
+        if (SaveNotes())
+        {
+            Console.WriteLine("Note updated and saved.");
         }
     }
 
