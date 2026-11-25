@@ -2,3 +2,5 @@
 **/obj/
 .vs/
 *.user
+/notes.json
+/Milestone01_BasicConsole/notes.json
