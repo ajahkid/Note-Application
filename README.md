@@ -32,10 +32,34 @@ commands above stores it in `Milestone01_BasicConsole`. The file is ignored by
 Git to avoid accidentally committing personal notes. Keep a backup if the
 notes are important.
 
+## Milestone 02: OOP and Persistence
+
+This version keeps the same console menu and JSON storage, but uses a `Note`
+class instead of storing each note as a single string. A note has a title and
+content. The constructor creates a note, and the `Update` method changes its
+properties. The properties have private setters, so they cannot be changed
+directly from outside the class.
+
+The menu can add, list, find, edit, and delete notes. Search checks both the
+title and content. Both fields are required.
+
+### How to run
+
+Install the .NET 10 SDK. Open a terminal in the project root and run:
+
+```powershell
+cd Milestone02_OOP
+dotnet run
+```
+
+This version saves to `milestone02-notes.json` in the terminal's current
+folder. It uses a separate file because its note format is different from
+Milestone 01; notes are not automatically transferred between the versions.
+The file is ignored by Git when running from the project root or milestone
+folder.
+
 ## Planned milestones
 
-- **Milestone 02:** Introduce a clearer note model using classes and objects,
-  while keeping JSON storage.
 - **Milestone 03:** Separate the console, services, and data access; add users
   and owner-specific notes.
 - **Milestone 04:** Replace JSON storage with a relational database and show
