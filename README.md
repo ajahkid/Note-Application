@@ -93,10 +93,44 @@ Its data is separate from the earlier milestones and is not automatically
 transferred. The file is ignored by Git when running from the project root or
 milestone folder.
 
+## Milestone 04: Database Application
+
+This version keeps the multi-user console application but replaces JSON
+storage with a SQLite relational database using Entity Framework Core (EF
+Core). The `Users` and `Notes` tables each have an `Id` primary key.
+`Notes.OwnerId` is a foreign key to `Users.Id`: one user can own many notes,
+and each note has one owner. Usernames have a unique normalized value so
+registration and login are case-insensitive.
+
+The repository uses parameterized SQL for user and owner-specific note
+queries. EF Core saves new and changed records. Additional example SQL
+queries are in `Milestone04_Database/example-queries.sql`. SQLite's native
+package is pinned separately to avoid a known vulnerability in the older
+transitive version.
+
+### How to run
+
+Install the .NET 10 SDK. Open a terminal in the project root and run:
+
+```powershell
+cd Milestone04_Database
+dotnet run
+```
+
+The first run restores the required packages and creates
+`milestone04-data.db` in the terminal's current folder. Register and log in
+to manage notes. The database is separate from previous milestone files; data
+is not automatically imported. The database is ignored by Git when running
+from the project root or milestone folder. Back up the database if needed.
+
+This educational app is intended for one running instance at a time.
+Passwords are hashed, but are visible when typed; note contents and the
+database are not encrypted. Do not use real passwords or sensitive notes.
+EF Core uses `EnsureCreated` for this milestone; it creates a new database
+but does not update an existing schema when the models change.
+
 ## Planned milestones
 
-- **Milestone 04:** Replace JSON storage with a relational database and show
-  the relationship between users and notes.
 - **Milestone 05:** Add an ASP.NET Core Web API for managing notes.
 
 These milestones will be added as they are built and tested.
