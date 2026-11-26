@@ -58,10 +58,43 @@ Milestone 01; notes are not automatically transferred between the versions.
 The file is ignored by Git when running from the project root or milestone
 folder.
 
+## Milestone 03: Layered Multi-user Console Application
+
+This version adds user registration, login, and logout. Each note belongs to
+one user, and the menu only shows and changes the current user's notes.
+Note IDs stay with the notes instead of being their positions in a list.
+
+The code is organized into three layers:
+
+- **Presentation:** `ConsoleMenu` displays menus and reads input.
+- **Service:** `NoteService` checks input, manages the current user, and
+  applies note ownership rules.
+- **Data access:** `JsonRepository` loads and saves users and notes as JSON.
+
+The models describe users and notes. Passwords are stored as salted PBKDF2
+hashes rather than plain text. This is a learning project: passwords are
+visible while typing, note contents are not encrypted, and anyone with access
+to the JSON file can read or change it. Do not use real passwords or sensitive
+notes. The app is designed for one running instance at a time.
+
+### How to run
+
+Install the .NET 10 SDK. Open a terminal in the project root and run:
+
+```powershell
+cd Milestone03_LayeredConsole
+dotnet run
+```
+
+Register with a username and a password of at least eight characters, then log
+in. Note IDs are shown when listing notes and are used to edit or delete them.
+The app saves to `milestone03-data.json` in the terminal's current folder.
+Its data is separate from the earlier milestones and is not automatically
+transferred. The file is ignored by Git when running from the project root or
+milestone folder.
+
 ## Planned milestones
 
-- **Milestone 03:** Separate the console, services, and data access; add users
-  and owner-specific notes.
 - **Milestone 04:** Replace JSON storage with a relational database and show
   the relationship between users and notes.
 - **Milestone 05:** Add an ASP.NET Core Web API for managing notes.
